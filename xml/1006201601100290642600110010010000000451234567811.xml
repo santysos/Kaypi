@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<factura id="comprobante" version="1.0.0">
+  <infoTributaria>
+    <ambiente>1</ambiente>
+    <tipoEmision>1</tipoEmision>
+    <razonSocial>Hector Santiago Oña Sanchez</razonSocial>
+    <nombreComercial>Pekes Moda Infantil</nombreComercial>
+    <ruc>1002906426001</ruc>
+    <claveAcceso>1006201601100290642600110010010000000451234567811</claveAcceso>
+    <codDoc>01</codDoc>
+    <estab>001</estab>
+    <ptoEmi>001</ptoEmi>
+    <secuencial>000000045</secuencial>
+    <dirMatriz>Sucre y Atahualpa esquina 45-97</dirMatriz>
+  </infoTributaria>
+  <infoFactura>
+    <fechaEmision>10/06/2016</fechaEmision>
+    <dirEstablecimiento>Garcia Moreno entre Roca y Bolivar</dirEstablecimiento>
+    <obligadoContabilidad>NO</obligadoContabilidad>
+    <tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+    <razonSocialComprador>Martha Flores</razonSocialComprador>
+    <identificacionComprador>0603068065</identificacionComprador>
+    <direccionComprador>Joel Polanco y Colines conjunto la Maestranza bloque 2 departamento 20L</direccionComprador>
+    <totalSinImpuestos>133.07</totalSinImpuestos>
+    <totalDescuento>0.00</totalDescuento>
+    <totalConImpuestos>
+      <totalImpuesto>
+        <codigo>2</codigo>
+        <codigoPorcentaje>2</codigoPorcentaje>
+        <baseImponible>133.07</baseImponible>
+        <tarifa>12</tarifa>
+        <valor>15.97</valor>
+      </totalImpuesto>
+    </totalConImpuestos>
+    <propina>0.00</propina>
+    <importeTotal>149.04</importeTotal>
+    <moneda>Dolar</moneda>
+  </infoFactura>
+  <detalles><detalle>
+      <codigoPrincipal>MCAR</codigoPrincipal>
+      <descripcion>Monito Carters Sleep&Play - Tallas Disponibles : 6 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>16.07</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>16.07</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>16.07</baseImponible>
+          <valor>1.93</valor>
+        </impuesto>
+      </impuestos>
+    </detalle><detalle>
+      <codigoPrincipal>ckt-2030</codigoPrincipal>
+      <descripcion>Conjunto 3 Piezas Chompa Capucha - Tallas Disponibles : 6 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>24</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>24</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>24</baseImponible>
+          <valor>2.88</valor>
+        </impuesto>
+      </impuestos>
+    </detalle><detalle>
+      <codigoPrincipal>121G071</codigoPrincipal>
+      <descripcion>Conjunto 3 Piezas Chompa Capucha - Tallas Disponibles : 6 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>24</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>24</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>24</baseImponible>
+          <valor>2.88</valor>
+        </impuesto>
+      </impuestos>
+    </detalle><detalle>
+      <codigoPrincipal>121G058</codigoPrincipal>
+      <descripcion>Conjunto 3 Piezas Carters - Tallas Disponibles : 18 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>24</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>24</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>24</baseImponible>
+          <valor>2.88</valor>
+        </impuesto>
+      </impuestos>
+    </detalle><detalle>
+      <codigoPrincipal>121G582</codigoPrincipal>
+      <descripcion>Vestido y Bolero 2pc Carters - Tallas Disponibles : 9 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>21</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>21</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>21</baseImponible>
+          <valor>2.52</valor>
+        </impuesto>
+      </impuestos>
+    </detalle><detalle>
+      <codigoPrincipal>121G055</codigoPrincipal>
+      <descripcion>Conjunto 3 Piezas Carters - Tallas Disponibles : 6 Meses</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>24</precioUnitario>
+      <descuento>0.00</descuento>
+      <precioTotalSinImpuesto>24</precioTotalSinImpuesto>
+      <impuestos>
+        <impuesto>
+          <codigo>2</codigo>
+          <codigoPorcentaje>2</codigoPorcentaje>
+          <tarifa>12</tarifa>
+          <baseImponible>24</baseImponible>
+          <valor>2.88</valor>
+        </impuesto>
+      </impuestos>
+    </detalle></detalles>
+  <infoAdicional>
+    <campoAdicional nombre="email">mcfj2604@gmail.com</campoAdicional>
+    <campoAdicional nombre="telefono">0987133672</campoAdicional>
+  </infoAdicional>
+</factura>

@@ -1,0 +1,7 @@
+
+.subraya:hover {
+    /*content: "Agregar Pago";*/
+    outline: none;
+    text-decoration: underline;
+    color: #5CB860;
+}

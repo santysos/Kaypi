@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_pagados" value="name:id_order;datatype:int,name:reference;datatype:string,name:invoice_number;datatype:int" />
+</info>
