@@ -34,12 +34,12 @@
                 {!!Form::Open(array('url'=>'compras/retenciones','method'=>'POST','autocomplete'=>'off'))!!}
                 {!!Form::token()!!}
                 <input id="usuario" name="usuario" type="hidden" value="{{ Auth::user()->id }}"/>
-                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                     {!!Form::text('Cliente',null,['id'=>'Cliente','class'=>'form-control','required' =>
                     'required','placeholder'=>'Buscar Proveedor'])!!}
                 </div>
 
-                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group input-group">
                         <span class="input-group-addon" id="basic-addon1">
                             Fecha:
@@ -49,12 +49,40 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                    {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
-                    'required','placeholder'=>'Número Comprobante de Venta'])!!}
+                        <div class="form-group input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    Est:
+                                </span>
+                                {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
+                                'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                            </div>
+                        
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group input-group">
+                                    <span class="input-group-addon" id="basic-addon1">
+                                        P Emi:
+                                    </span>
+                                    {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
+                                    'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                                </div>
+                            
+                        </div>
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    Num. Compr:
+                                </span>
+                                {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
+                                'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                            </div>
+                    
+                    {!!Form::hidden('secuencial',$ultimo_num_retencion+1,['readonly','id'=>'secuencial','class'=>'form-control','required' =>
+                    'required','placeholder'=>'Secuencial'])!!}
+                        
                 </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        {!!Form::text('secuencial',$ultimo_num_retencion+1,['readonly','id'=>'secuencial','class'=>'form-control','required' =>
-                        'required','placeholder'=>'Secuencial'])!!}
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   
                     </div>
                 <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
                     {!!Form::hidden('razon_social',null,['id'=>'razon_social','class'=>'form-control','required' =>
