@@ -116,7 +116,7 @@ class RetencionController extends Controller
                 $detalle->base_imponible               = $base_imponible[$cont];
                 $detalle->codigo                       = "RET";
                 $detalle->codigo_sri                   = $idporcentaje[$cont];
-                $detalle->fecha_comprobante            = $retencion->fecha;
+                $detalle->fecha_comprobante            = date('d/m/Y',strtotime($retencion->fecha));
                 $detalle->numero                       = $retencion->numero;
                 $detalle->numero_comprobante           = numero_completo_retencion($establecimiento,$punto_emision,$numero_comprobante) ;
                 $detalle->porcentaje                   = $idporcentaje_valor[$cont];
