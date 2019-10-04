@@ -4,7 +4,7 @@ $("#impuesto").change(event => {
 		$("#porcentaje").append(`<option disabled selected> Seleccione % </option>`);
 		res.forEach(element => {
 			
-			$("#porcentaje").append(`<option value=${element.codigo_sri}> ${element.porcentaje}</option>`);
+			$("#porcentaje").append(`<option value=${element.codigo_sri}> ${element.porcentaje+"% - "+element.descripcion_retencion} </option>`);
 		});
 	});
 });
