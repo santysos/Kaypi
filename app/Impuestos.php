@@ -28,6 +28,7 @@ class Impuestos extends Model
     {
         return Impuestos::where('tipo_impuesto', '=', $id)
             ->where('condicion', '=', '1')
+            ->orderBy('porcentaje','asc')
             ->get();
 
     }
