@@ -53,11 +53,22 @@ class RetencionController extends Controller
 
         return view('compras.retenciones.create', compact('ultimo_num_retencion'));
     }
+
+
+
     public function store(RetencionFormRequest $request)
     {
-        $establecimiento = $request->get('establecimiento');
-        $punto_emision = $request->get('punto_emision');
-        try {
+        function numero_completo_retencion($est,$pemi,$num)
+        {
+            $num_9 = str_pad($num, 9, "0", STR_PAD_LEFT);
+    
+            return $est.$pemi.$num_9;
+        }
+        
+        $establecimiento_emisor = "002";//establecimiento ingresado manualmente
+        $punto_emision_emisor = "002";//punto de emision ingresado manualmente
+
+      //  try {
 
             DB::beginTransaction();
 
@@ -66,16 +77,19 @@ class RetencionController extends Controller
             $retencion->codigo_documento = "07";
             $retencion->direccion_establecimiento = $request->get('direccion_establecimiento');
             $retencion->documento = $request->get('documento');
-            $retencion->establecimiento = $establecimiento;
-            $retencion->punto_emision = $punto_emision;
+            $retencion->establecimiento = $establecimiento_emisor;
+            $retencion->punto_emision = $punto_emision_emisor;
             $retencion->fecha = $request->get('fecha');
             $retencion->id_contribuyente = 1;
             $numero_comprobante = $request->get('numero');
 
             $secuencial = $request->get('secuencial');
             $secuencial = str_pad($secuencial, 9, "0", STR_PAD_LEFT);
+
             $retencion->secuencial = $secuencial;
-            $retencion->numero = $establecimiento . $punto_emision . $secuencial;
+            $retencion->numero = numero_completo_retencion($establecimiento_emisor,$punto_emision_emisor,$secuencial);
+
+           // dd($retencion->numero);
 
             $mes_retencion = date("m", strtotime($retencion->fecha));
             $anio_retencion = date("Y", strtotime($retencion->fecha));
@@ -86,6 +100,9 @@ class RetencionController extends Controller
 
 
             //en las siguientes variables se guardan los arreglos del detalle de cada producto.
+            $establecimiento = $request->get('establecimiento');
+            $punto_emision = $request->get('punto_emision');
+
             $idimpuesto              = $request->get('id_impuesto');
             $idporcentaje            = $request->get('id_porcentaje');
             $idporcentaje_valor      = $request->get('id_porcentaje_valor');
@@ -101,7 +118,7 @@ class RetencionController extends Controller
                 $detalle->codigo_sri                   = $idporcentaje[$cont];
                 $detalle->fecha_comprobante            = $retencion->fecha;
                 $detalle->numero                       = $retencion->numero;
-                $detalle->numero_comprobante           = $numero_comprobante;
+                $detalle->numero_comprobante           = numero_completo_retencion($establecimiento,$punto_emision,$numero_comprobante) ;
                 $detalle->porcentaje                   = $idporcentaje_valor[$cont];
                 $detalle->tipo                         = $idimpuesto[$cont];
                 $detalle->tipo_comprobante             = "01";
@@ -116,10 +133,9 @@ class RetencionController extends Controller
             $retencion->save();
 
             DB::commit();
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             DB::rollback();
-        }
-
+        }*/
 
         Session::flash('message', "Retención #" . $secuencial . " creada Satisfactoriamente");
 
