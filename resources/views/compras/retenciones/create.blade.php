@@ -53,8 +53,8 @@
                                 <span class="input-group-addon" id="basic-addon1">
                                     Est:
                                 </span>
-                                {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
-                                'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                                {!!Form::text('establecimiento',null,['id'=>'establecimiento','class'=>'form-control','required' =>
+                                'required','placeholder'=>'Establecimiento','maxlength'=>'3'])!!}  
                             </div>
                         
                     </div>
@@ -63,8 +63,8 @@
                                     <span class="input-group-addon" id="basic-addon1">
                                         P Emi:
                                     </span>
-                                    {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
-                                    'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                                    {!!Form::text('punto_emision',null,['id'=>'punto_emision','class'=>'form-control','required' =>
+                                    'required','placeholder'=>'Punto Emisión','maxlength'=>'3'])!!}  
                                 </div>
                             
                         </div>
@@ -74,7 +74,7 @@
                                     Num. Compr:
                                 </span>
                                 {!!Form::text('numero',null,['id'=>'numero','class'=>'form-control','required' =>
-                                'required','placeholder'=>'Número Comprobante de Venta'])!!}  
+                                'required','placeholder'=>'Número Comprobante de Venta','maxlength'=>'9'])!!}  
                             </div>
                     
                     {!!Form::hidden('secuencial',$ultimo_num_retencion+1,['readonly','id'=>'secuencial','class'=>'form-control','required' =>
@@ -127,7 +127,7 @@
                 
                 <div class="col-lg-4 col-sm-3 col-md-2 col-xs-12">
                     <div class="form-group">
-                        {!!Form::select('impuesto',['placeholder'=>'Impuesto','1' => 'RENTA', '2' => 'IVA','6' => 'ISD'],null,['id'=>'impuesto','onchange'=>'calcularValorTotal();','class'=>'form-control'])!!}
+                        {!!Form::select('impuesto',['placeholder'=>'Impuesto','1' => 'RENTA', '2' => 'IVA'],null,['id'=>'impuesto','onchange'=>'calcularValorTotal();','class'=>'form-control'])!!}
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-3 col-md-2 col-xs-12">
@@ -237,11 +237,7 @@
 </script>
 <script src="{{ asset('/js/selectdinamicoprecios.js') }}" type="text/javascript">
 </script>
-<script>
-    function titulo(){      
-    document.title = 'Nueva Orden | Ordenes'; }
-titulo();
-</script>
+
 <script>
     $(document).ready(function() {
      evaluar();
@@ -284,6 +280,9 @@ idimpuesto = $("#impuesto option:selected").val();
 impuesto = $("#impuesto option:selected").text();
 idporcentaje = $("#porcentaje option:selected").val();
 porcentaje = $("#porcentaje option:selected").text();
+valor_porcentaje = porcentaje.split("%");
+valor_porcentaje = valor_porcentaje[0].trim();
+console.log(valor_porcentaje);
 base_imponible = $("#base_imponible").val();    
 
 calcularValorTotal();
@@ -293,7 +292,7 @@ console.log(idimpuesto+impuesto+" "+total);
 
 if (idimpuesto!="" && base_imponible!="" && base_imponible>0.01)
 {
-        elporcentaje = porcentaje /100;
+        elporcentaje = valor_porcentaje /100;
         total_impuesto= elporcentaje*base_imponible;
         console.log(total_impuesto);
 
@@ -302,7 +301,7 @@ if (idimpuesto!="" && base_imponible!="" && base_imponible>0.01)
         total=total+subtotal[cont];
         console.log(total);
 
-        var fila = '<tr class="selected" id="fila'+cont+'"><td colspan="2" ><button tabindex="1" type"button" class="btn btn-xs btn-warning" onclick="eliminar('+cont+');">x</button></td><td><input readonly type="hidden" name="id_impuesto[]" value="'+idimpuesto+'">'+impuesto+'</td><td><input readonly type="hidden" name="id_porcentaje[]" value="'+idporcentaje+'">'+porcentaje+'<input readonly type="hidden" name="id_porcentaje_valor[]" value="'+porcentaje+'"></td><td><input readonly type="hidden" name="id_base_imponible[]" value="'+base_imponible+'">'+parseFloat(base_imponible).toFixed(2)+'</td><td><input readonly type="hidden" name="valortotal[]" value="'+parseFloat(total_impuesto).toFixed(6)+'">'+parseFloat(total_impuesto).toFixed(2)+'</td></tr>';
+        var fila = '<tr class="selected" id="fila'+cont+'"><td colspan="2" ><button tabindex="1" type"button" class="btn btn-xs btn-warning" onclick="eliminar('+cont+');">x</button></td><td><input readonly type="hidden" name="id_impuesto[]" value="'+idimpuesto+'">'+impuesto+'</td><td><input readonly type="hidden" name="id_porcentaje[]" value="'+idporcentaje+'">'+porcentaje+'<input readonly type="hidden" name="id_porcentaje_valor[]" value="'+valor_porcentaje+'"></td><td><input readonly type="hidden" name="id_base_imponible[]" value="'+base_imponible+'">'+parseFloat(base_imponible).toFixed(2)+'</td><td><input readonly type="hidden" name="valortotal[]" value="'+parseFloat(total_impuesto).toFixed(6)+'">'+parseFloat(total_impuesto).toFixed(2)+'</td></tr>';
 
         cont++;
         

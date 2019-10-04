@@ -55,8 +55,8 @@ class RetencionController extends Controller
     }
     public function store(RetencionFormRequest $request)
     {
-        $establecimiento = "002";
-        $punto_emision = "002";
+        $establecimiento = $request->get('establecimiento');
+        $punto_emision = $request->get('punto_emision');
         try {
 
             DB::beginTransaction();
