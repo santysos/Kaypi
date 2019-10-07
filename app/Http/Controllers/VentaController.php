@@ -48,7 +48,7 @@ class VentaController extends Controller
   {
     if ($request->ajax()) {
       $numComp = Venta::dnumComp($id);
-      
+
       return response()->json($numComp);
     }
   }
@@ -66,7 +66,7 @@ class VentaController extends Controller
           ->join('tb_cliente as p', 'v.tb_cliente_idtb_cliente', '=', 'p.idtb_cliente')
           ->join('users as us', 'v.users_id', '=', 'us.id')
           ->select('us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
-          ->where('v.condicion','=','1')
+          ->where('v.condicion', '=', '1')
           ->where('v.num_comprobante', 'LIKE', '%' . $query . '%')
           ->orwhere('p.nombre_comercial', 'LIKE', '%' . $query . '%')
           ->orderBy('v.created_at', 'desc')
@@ -85,23 +85,23 @@ class VentaController extends Controller
           $venta->abono = 0;
           foreach ($suma_pagos as $suma_pago) {
             if ($venta->idtb_venta == $suma_pago->tb_venta_idtb_venta) {
-              $venta->abono =$suma_pago->total;
-           // dd((double)($venta->abono));
+              $venta->abono = $suma_pago->total;
+              // dd((double)($venta->abono));
             }
             $venta->saldo = number_format($venta->total_venta - $venta->abono, 2);
           }
         }
-        
+
         // dd($ventas);
         $personas = DB::table('tb_cliente')
           ->select(DB::raw('CONCAT(cedula_ruc," - ",nombre_comercial)AS cedcliente'), 'idtb_cliente')->get();
-      }//para los usuarios que no son ADMINISTRADORES
-       else {
+      } //para los usuarios que no son ADMINISTRADORES
+      else {
         $ventas = DB::table('tb_venta as v')
           ->join('tb_cliente as p', 'v.tb_cliente_idtb_cliente', '=', 'p.idtb_cliente')
           ->join('users as us', 'v.users_id', '=', 'us.id')
           ->select('us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
-          ->where('v.condicion','=','1')
+          ->where('v.condicion', '=', '1')
           ->where('v.sucursal', '=', Auth::user()->sucursal)
           ->where('p.nombre_comercial', 'LIKE', '%' . $query . '%')
           ->orderBy('v.created_at', 'desc')
@@ -120,7 +120,8 @@ class VentaController extends Controller
           $venta->abono = 0;
           foreach ($suma_pagos as $suma_pago) {
             if ($venta->idtb_venta == $suma_pago->tb_venta_idtb_venta) {
-              $venta->abono =$suma_pago->total;            }
+              $venta->abono = $suma_pago->total;
+            }
             $venta->saldo = number_format($venta->total_venta - $venta->abono, 2);
           }
         }
@@ -165,6 +166,14 @@ class VentaController extends Controller
 
   public function store(VentaFormRequest $request)
   {
+    function numero_completo_retencion($est, $pemi, $num)
+    {
+      $num_9 = str_pad($num, 9, "0", STR_PAD_LEFT);
+
+      return $est . $pemi . $num_9;
+    }
+    $establecimiento_emisor = "002"; //establecimiento ingresado manualmente
+    $punto_emision_emisor = "002"; //punto de emision ingresado manualmente
     try {
       DB::beginTransaction();
       $venta = new Venta;
@@ -172,7 +181,21 @@ class VentaController extends Controller
       $venta->users_id = $request->get('users_id');
       $venta->tipo_comprobante = $request->get('tipo_comprobante');
       //$venta->serie_comprobante=$request->get('serie_comprobante');
-      $venta->num_comprobante = $request->get('num_comprobante');
+
+      if (Auth::user()->sucursal == 1) {
+        //busca el ultimo numero del comprobante
+        $num_comprobante = Venta::select('num_comprobante')
+          ->where('sucursal', '=', "1")
+          ->orderBy('num_comprobante', 'desc')
+          ->first();
+
+        $venta->num_comprobante = $num_comprobante->num_comprobante + 1;
+        $venta->numero = numero_completo_retencion($establecimiento_emisor, $punto_emision_emisor, $venta->num_comprobante);
+      } else {
+        $venta->num_comprobante = $request->get('num_comprobante');
+        $venta->numero = 0;
+      }
+
       $venta->total_venta = $request->get('total_venta');
       $venta->sub_total_0 = $request->get('sub_total_0');
       $venta->sub_total_12 = $request->get('sub_total_12');
@@ -252,7 +275,7 @@ class VentaController extends Controller
       ->select('dv.tb_venta_idtb_venta', 'dv.tb_articulo_idtb_articulo', 'dv.cantidad')
       ->where('dv.tb_venta_idtb_venta', '=', $venta->idtb_venta)
       ->get();
-     // dd($detalleventa);
+    // dd($detalleventa);
 
     foreach ($detalleventa as $detve) {
       $articulo = Articulo::findOrFail($detve->tb_articulo_idtb_articulo);
@@ -260,7 +283,7 @@ class VentaController extends Controller
       $articulo->update();
     }
 
-    
+
 
     return Redirect::to('ventas/venta');
   }

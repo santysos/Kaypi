@@ -56,7 +56,7 @@
         <div class="col-lg-2 col-sm-3 col-md-3 col-xs-12">
           <div class="form-group">
             {!! Form::label('categoria', 'Comprobante') !!}
-            <select  name="tipo_comprobante" id="tipo_comprobante" class="form-control" >
+            <select name="tipo_comprobante" id="tipo_comprobante" class="form-control">
 
               <option value="Factura">Factura</option>
 
@@ -68,30 +68,39 @@
       {!! Form::label('codigo', 'Serie Comprobante') !!}
       <input type="text" name="serie_comprobante" value="{{old('serie_comprobante')}}" class="form-control" placeholder="Serie Comprobante..."></div>
     </div>-->
-       @if(Auth::user()->tb_tipo_usuario_idtb_tipo_usuario==1)
+        @if(Auth::user()->tb_tipo_usuario_idtb_tipo_usuario==1)
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
           <div class="form-group">
             {!! Form::label('sucur', 'Sucursal') !!}
-            <select  required name="selectsucursal" id="selectsucursal" class="form-control required">
+            <select required name="selectsucursal" id="selectsucursal" class="form-control required">
               <option value="" disabled selected>Seleccione la sucursal</option>
               <option value="1">Otavalo</option>
               <option value="2">Quito</option>
             </select>
           </div>
         </div>
-        @endif
-
         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
           <div class="form-group">
             {!! Form::label('codigo', 'Num Comprobante') !!}
-            <input type="number" name="num_comprobante" id="num_comprobante" required value="{{old('num_comprobante')}}" class="form-control"
-              placeholder="Número de Comprobante...">
+            <input type="number" name="num_comprobante" id="num_comprobante" required value="{{old('num_comprobante')}}"
+              class="form-control" placeholder="Número de Comprobante...">
           </div>
-
         </div>
+        @elseif(Auth::user()->sucursal==2)
+        <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+          <div class="form-group">
+            {!! Form::label('codigo', 'Num Comprobante') !!}
+            <input type="number" name="num_comprobante" id="num_comprobante" required value="{{old('num_comprobante')}}"
+              class="form-control" placeholder="Número de Comprobante...">
+          </div>
+        </div>
+        @endif
+
+
         <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
           <div class="form-group">
-            <input type="checkbox" value="1" name="impuesto" id="impuesto" class="checkbox" disabled="" style="opacity:0; position:absolute; left:9999px;">
+            <input type="checkbox" value="1" name="impuesto" id="impuesto" class="checkbox" disabled=""
+              style="opacity:0; position:absolute; left:9999px;">
           </div>
         </div>
       </div>
@@ -206,7 +215,7 @@
           </table>
 
         </div>
-    
+
         <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
           <div class="form-group">
             {!! Form::label('forma_de_pago', 'Forma de Pago') !!}
