@@ -53,6 +53,9 @@
                                 Ced/Ruc
                             </th>
                             <th>
+                                Email
+                            </th>
+                            <th>
                                 Dirección
                             </th>
                             <th>
@@ -76,6 +79,9 @@
                             </td>
                             <td>
                                 {{ $cat->cedula_ruc}}
+                            </td>
+                            <td>
+                                {{ $cat->email}}
                             </td>
                             <td>
                                 {{ $cat->direccion}}

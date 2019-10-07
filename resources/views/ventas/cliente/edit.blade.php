@@ -289,7 +289,7 @@
             <div class="col-lg-3 col-sm-6 col-md-6 col-xs-6">
                 <div class="form-group">
                     {!! Form::label('descripcion', 'Email') !!}
-                    {!! Form::email('email', 'notiene@hotmail.com', ['class' => 'form-control' ,'placeholder'=>'Email...']) !!}
+                    {!! Form::email('email', null, ['class' => 'form-control' ,'placeholder'=>'Email...']) !!}
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
