@@ -286,6 +286,11 @@ return [
                     'icon'  => 'plus',
                 ],
                 [
+                    'text'  => 'Nuevo Proveedor',
+                    'url'   => 'compras/proveedor/create',
+                    'icon'  => 'truck',
+                ],
+                [
                     'text'  => 'Listado de Retenciones',
                     'url'   => 'compras/retenciones',
                     'icon'  => 'file-text-o',

@@ -3,7 +3,6 @@
 @section('title', 'Kaypi v1.0')
 
 @section('content_header')
-    <h1>Esta es la página de inicio</h1>
 @stop
 
 @section('content')
@@ -13,7 +12,7 @@
             <div class="panel-body">
                     <div class="box box-primary">
                             <div class="box-header with-border">
-                              <h3 class="box-title">Bienvenido a GEVEN</h3>
+                              <h3 class="box-title">Bienvenido a Kaypi </h3>
                               <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                               </div><!-- /.box-tools -->
