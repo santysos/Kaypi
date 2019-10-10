@@ -42,6 +42,7 @@ Route::get('ventas/ordenes/borrar/{id}', 'OrdenesController@borrarorden');
 Route::resource('ventas/ordenes','OrdenesController');
 Route::resource('ventas/cliente','ClienteController');
 Route::resource('ventas/venta','VentaController');
+Route::resource('buscar','BuscarController');
 Route::resource('ventas/reportes', 'ReportesController');
 Route::resource('ventas/produccion', 'ProduccionController');
 

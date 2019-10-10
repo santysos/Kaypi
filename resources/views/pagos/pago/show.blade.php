@@ -148,9 +148,9 @@
             <thead style="background-color: #A9D0F5">
               <th>Id</th>
               <th>Tipo de Pago</th>
-              <th>Valor</th>
-              <th>Notas</th>
               <th>Fecha</th>
+              <th>Notas</th>
+              <th>Valor</th>
 
             </thead>
             <tbody>
@@ -158,8 +158,8 @@
               <tr>
                 <td>{{$pago->idtb_pagos}}</td>
                 <td>{{$pago->tipo_pago}}</td>
-                <td>$ {{$pago->valor}}</td>
-                <td>$ {{$pago->notas}}</td>
+                <td>{{$pago->fecha_pago}} </td>
+                <td>{{$pago->notas}}</td>
                 <td>$ {{number_format($pago->valor,2)}}</td>
               </tr>
               @endforeach
