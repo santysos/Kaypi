@@ -71,41 +71,45 @@
 									@endif
 								</td>
 								@if(Auth::user()->sucursal == 1)
+
 								<td>
-									@if($cat->estado=='AUTORIZADO')
+									@foreach ($estado_fact_elec as $estado)
+									@if($cat->numero==$estado->numero)
+									@if($estado->estado=='AUTORIZADO')
 									<span class="pull-right-container">
-										<small class="label pull-center bg-green">{{$cat->estado}}</small>
+										<small class="label pull-center bg-green"><a target="_blank" style="color:#fff"; href="http://162.243.161.165:9090/rest/v1/pdf/codigo/FV/numero/{{$cat->numero}}">{{$estado->estado}}</a></small>
 									</span>
-									@elseif($cat->estado=="NO ENVIADO")
+									@elseif($estado->estado=="RECIBIDA")
 									<span class="pull-right-container">
-										<small class="label pull-center bg-blue">{{$cat->estado}}</small>
+										<small class="label pull-center bg-yellow">{{$estado->estado}}</small>
 									</span>
-									@elseif($cat->estado=="RECIBIDA")
+									@elseif($estado->estado=="DEVUELTA")
 									<span class="pull-right-container">
-										<small class="label pull-center bg-yellow">{{$cat->estado}}</small>
+										<small class="label pull-center bg-red">{{$estado->estado}}</small>
 									</span>
-									@elseif($cat->estado=="DEVUELTA")
-									<span class="pull-right-container">
-										<small class="label pull-center bg-red">{{$cat->estado}}</small>
-									</span>
+
 									@endif
+									@endif
+									@endforeach
+
 								</td>
+
 								@else
 								<td></td>
 								@endif
 								<td>
-
+						
+									<a target="_blank" title="Detalle Venta"
+									href="{{URL::action('VentaController@show',$cat->idtb_venta)}}"><button
+										type="button" class="btn btn-primary btn-xs"><span
+											class="glyphicon glyphicon-list-alt"
+											aria-hidden="true"></span></button></a>
+							
+									@if($cat->condicion=="1")
 									<a title="Cambiar Cliente" href=""
 										data-target="#modalasignarcliente-{{$cat->idtb_venta}}"
 										data-toggle="modal"><button type="button" class="btn btn-warning btn-xs"><span
 												class="glyphicon glyphicon-user" aria-hidden="true"></span></button></a>
-
-									<a title="Detalle Venta"
-										href="{{URL::action('VentaController@show',$cat->idtb_venta)}}"><button
-											type="button" class="btn btn-primary btn-xs"><span
-												class="glyphicon glyphicon-list-alt"
-												aria-hidden="true"></span></button></a>
-									@if($cat->condicion=="1")
 									<a title="Imprimir" target="_blank"
 										href="{{URL::action('VentaController@reportec',$cat->idtb_venta)}}"><button
 											type="button" class="btn btn-success btn-xs"><span
@@ -116,9 +120,7 @@
 										data-toggle="modal"><button type="button" class="btn btn-danger btn-xs"><span
 												class="glyphicon glyphicon-trash"
 												aria-hidden="true"></span></button></a>
-									@endif
-
-
+												@endif
 								</td>
 								<td>
 
