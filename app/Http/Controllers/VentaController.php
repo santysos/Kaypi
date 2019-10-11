@@ -73,6 +73,8 @@ class VentaController extends Controller
           ->groupBy('v.idtb_venta', 'v.created_at', 'p.razon_social', 'p.nombre_comercial', 'p.idtb_cliente', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'us.id', 'v.users_id')
           ->paginate(20);
 
+
+         //seleciona es estado de cada factura electronica generada 
         $estado_fact_elec = DB::table('ele_documentos_electronicos as elec')
         ->join('tb_venta as v','elec.numero','=','v.numero')
         ->select('elec.estado','elec.numero')
@@ -80,7 +82,7 @@ class VentaController extends Controller
         ->orderBy('elec.id','asc')
         ->get();  
 
-       // dd($ventas);
+        //asigna el estado de cada factura electronica
         foreach($estado_fact_elec as $fact_elec)
         {
         foreach ($ventas as $venta) 
@@ -95,7 +97,6 @@ class VentaController extends Controller
           }
         }
 
-    //   dd($ventas);
 
         $tipo_pago = TipoPago::where('condicion', '=', '1')
           ->pluck('tipo_pago', 'idtb_tipo_pago');
@@ -131,6 +132,29 @@ class VentaController extends Controller
           ->orderBy('v.created_at', 'desc')
           ->groupBy('v.idtb_venta', 'v.created_at', 'p.razon_social', 'p.nombre_comercial', 'p.idtb_cliente', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'us.id', 'v.users_id')
           ->paginate(20);
+
+             //seleciona es estado de cada factura electronica generada 
+        $estado_fact_elec = DB::table('ele_documentos_electronicos as elec')
+        ->join('tb_venta as v','elec.numero','=','v.numero')
+        ->select('elec.estado','elec.numero')
+        ->where('elec.codigo','=','FV')
+        ->orderBy('elec.id','asc')
+        ->get();  
+
+        //asigna el estado de cada factura electronica
+        foreach($estado_fact_elec as $fact_elec)
+        {
+        foreach ($ventas as $venta) 
+          {
+            if($venta->numero==$fact_elec->numero)
+            {
+              $venta->estado = $fact_elec->estado;
+            }elseif($venta->numero ==""||$venta->numero =="0")
+            {
+              $venta->estado = "NO ENVIADO";
+            }
+          }
+        }
 
         $tipo_pago = TipoPago::where('condicion', '=', '1')
           ->pluck('tipo_pago', 'idtb_tipo_pago');
