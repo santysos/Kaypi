@@ -109,6 +109,14 @@
 									</a>
 									@endif
 								</td>
+								<td>
+									<a title="Detalle Venta"
+										href="{{URL::action('VentaController@show',$cat->idtb_venta)}}"><button
+											type="button" class="btn btn-primary btn-xs"><span
+												class="glyphicon glyphicon-list-alt"
+												aria-hidden="true"></span></button></a>
+							
+								</td>
 								@if($cat->condicion=="0")
 								<td>
 									<span class="pull-center-container">
@@ -122,31 +130,7 @@
 									</span>
 								</td>
 								@endif
-								<td>
-
-									<a title="Cambiar Cliente" href=""
-										data-target="#modalasignarcliente-{{$cat->idtb_venta}}"
-										data-toggle="modal"><button type="button" class="btn btn-warning btn-xs"><span
-												class="glyphicon glyphicon-user" aria-hidden="true"></span></button></a>
-
-									<a title="Detalle Venta"
-										href="{{URL::action('VentaController@show',$cat->idtb_venta)}}"><button
-											type="button" class="btn btn-primary btn-xs"><span
-												class="glyphicon glyphicon-list-alt"
-												aria-hidden="true"></span></button></a>
-								@if($cat->condicion=="1")
-									<a title="Imprimir" target="_blank"
-										href="{{URL::action('VentaController@reportec',$cat->idtb_venta)}}"><button
-											type="button" class="btn btn-success btn-xs"><span
-												class="glyphicon glyphicon-print"
-												aria-hidden="true"></span></button></a>
-
-									<a title="Eliminar" href="" data-target="#modal-delete-{{$cat->idtb_venta}}"
-										data-toggle="modal"><button type="button" class="btn btn-danger btn-xs"><span
-												class="glyphicon glyphicon-trash"
-												aria-hidden="true"></span></button></a>
-								@endif
-								</td>
+								
 								<td>
 
 								</td>

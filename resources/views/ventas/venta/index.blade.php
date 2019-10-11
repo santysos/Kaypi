@@ -36,6 +36,7 @@
 								<th>Vendedor</th>
 								<th>Total</th>
 								<th>Abono - Saldo</th>
+								<th>Estado</th>
 								<th>Opciones</th>
 							</thead>
 							@foreach ($ventas as $cat)
@@ -50,7 +51,7 @@
 								<td>{{ '#'.$cat->num_comprobante}}</td>
 								<td>{{ $cat->name}}</td>
 								<td>${{ $cat->total_venta}}</td>
-								
+
 								<td>
 									@if ($cat->abono==$cat->total_venta)
 									<font color="green" id="abono2">${{$cat->abono}} </font>
@@ -69,19 +70,28 @@
 
 									@endif
 								</td>
-								@if($cat->condicion=="0")
+								@if(Auth::user()->sucursal == 1)
 								<td>
-									<span class="pull-center-container">
-										<small class="label pull-center bg-red">Anulado</small>
-									</span>
-								</td>
-								@elseif($cat->condicion=="1")
-								<td>
+									@if($cat->estado=='AUTORIZADO')
 									<span class="pull-right-container">
-										<small class="label pull-center bg-blue">Facturado</small>
-	
+										<small class="label pull-center bg-green">{{$cat->estado}}</small>
 									</span>
+									@elseif($cat->estado=="NO ENVIADO")
+									<span class="pull-right-container">
+										<small class="label pull-center bg-blue">{{$cat->estado}}</small>
+									</span>
+									@elseif($cat->estado=="RECIBIDA")
+									<span class="pull-right-container">
+										<small class="label pull-center bg-yellow">{{$cat->estado}}</small>
+									</span>
+									@elseif($cat->estado=="DEVUELTA")
+									<span class="pull-right-container">
+										<small class="label pull-center bg-red">{{$cat->estado}}</small>
+									</span>
+									@endif
 								</td>
+								@else
+								<td></td>
 								@endif
 								<td>
 
@@ -95,7 +105,7 @@
 											type="button" class="btn btn-primary btn-xs"><span
 												class="glyphicon glyphicon-list-alt"
 												aria-hidden="true"></span></button></a>
-								@if($cat->condicion=="1")
+									@if($cat->condicion=="1")
 									<a title="Imprimir" target="_blank"
 										href="{{URL::action('VentaController@reportec',$cat->idtb_venta)}}"><button
 											type="button" class="btn btn-success btn-xs"><span
@@ -106,7 +116,7 @@
 										data-toggle="modal"><button type="button" class="btn btn-danger btn-xs"><span
 												class="glyphicon glyphicon-trash"
 												aria-hidden="true"></span></button></a>
-								@endif
+									@endif
 
 
 								</td>

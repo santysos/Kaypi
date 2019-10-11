@@ -65,13 +65,37 @@ class VentaController extends Controller
         $ventas = DB::table('tb_venta as v')
           ->join('tb_cliente as p', 'v.tb_cliente_idtb_cliente', '=', 'p.idtb_cliente')
           ->join('users as us', 'v.users_id', '=', 'us.id')
-          ->select('us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
+          ->select('v.numero','us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
           ->where('v.condicion', '=', '1')
           ->where('v.num_comprobante', 'LIKE', '%' . $query . '%')
           ->orwhere('p.nombre_comercial', 'LIKE', '%' . $query . '%')
           ->orderBy('v.created_at', 'desc')
           ->groupBy('v.idtb_venta', 'v.created_at', 'p.razon_social', 'p.nombre_comercial', 'p.idtb_cliente', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'us.id', 'v.users_id')
           ->paginate(20);
+
+        $estado_fact_elec = DB::table('ele_documentos_electronicos as elec')
+        ->join('tb_venta as v','elec.numero','=','v.numero')
+        ->select('elec.estado','elec.numero')
+        ->where('elec.codigo','=','FV')
+        ->orderBy('elec.id','asc')
+        ->get();  
+
+       // dd($ventas);
+        foreach($estado_fact_elec as $fact_elec)
+        {
+        foreach ($ventas as $venta) 
+          {
+            if($venta->numero==$fact_elec->numero)
+            {
+              $venta->estado = $fact_elec->estado;
+            }elseif($venta->numero ==""||$venta->numero =="0")
+            {
+              $venta->estado = "NO ENVIADO";
+            }
+          }
+        }
+
+    //   dd($ventas);
 
         $tipo_pago = TipoPago::where('condicion', '=', '1')
           ->pluck('tipo_pago', 'idtb_tipo_pago');
@@ -182,16 +206,19 @@ class VentaController extends Controller
       $venta->tipo_comprobante = $request->get('tipo_comprobante');
       //$venta->serie_comprobante=$request->get('serie_comprobante');
 
+      //comprueba la sucursal por usuario
       if (Auth::user()->sucursal == 1) {
         //busca el ultimo numero del comprobante
         $num_comprobante = Venta::select('num_comprobante')
           ->where('sucursal', '=', "1")
           ->orderBy('num_comprobante', 'desc')
           ->first();
-
+        //aumenta en 11 el ultimo numero de comprobante
         $venta->num_comprobante = $num_comprobante->num_comprobante + 1;
+        // completa los 9 digitos del comprobante y agrega el num_establecimiento y el punto de venta del emisor
         $venta->numero = numero_completo_retencion($establecimiento_emisor, $punto_emision_emisor, $venta->num_comprobante);
-      } else {
+      } 
+      else {
         $venta->num_comprobante = $request->get('num_comprobante');
         $venta->numero = 0;
       }
