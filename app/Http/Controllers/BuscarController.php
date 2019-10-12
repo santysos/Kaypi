@@ -30,7 +30,7 @@ class BuscarController extends Controller
         $ventas = DB::table('tb_venta as v')
           ->join('tb_cliente as p', 'v.tb_cliente_idtb_cliente', '=', 'p.idtb_cliente')
           ->join('users as us', 'v.users_id', '=', 'us.id')
-          ->select('us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
+          ->select('v.numero','us.id', 'v.idtb_venta', 'v.created_at', 'p.idtb_cliente', 'p.razon_social', 'p.nombre_comercial', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'v.users_id')
           ->where('v.condicion', '=', '1')
           ->where('p.razon_social', 'LIKE', '%' . $query . '%')
           ->orwhere('p.nombre_comercial', 'LIKE', '%' . $query . '%')
@@ -38,7 +38,12 @@ class BuscarController extends Controller
           ->groupBy('v.idtb_venta', 'v.created_at', 'p.razon_social', 'p.nombre_comercial', 'p.idtb_cliente', 'v.tipo_comprobante', 'v.serie_comprobante', 'v.num_comprobante', 'v.impuesto', 'v.condicion', 'v.total_venta', 'us.name', 'us.id', 'v.users_id')
           ->paginate(20);
         
-
+          $estado_fact_elec = DB::table('ele_documentos_electronicos as elec')
+          ->join('tb_venta as v', 'elec.numero', '=', 'v.numero')
+          ->select('elec.estado', 'elec.numero')
+          ->where('elec.codigo', '=', 'FV')
+          ->orderBy('elec.numero', 'asc')
+          ->get();
       //   dd($ventas);
 
         $tipo_pago = TipoPago::where('condicion', '=', '1')
@@ -100,7 +105,7 @@ class BuscarController extends Controller
    
        
       } 
-      return view('ventas.venta.buscar', ["pagos"=>$pagos,"ventas" => $ventas, "personas" => $personas,"persona" => $persona, 'suma_pagos' => $suma_pagos, 'tipo_pago' => $tipo_pago, "searchText" => $query]);
+      return view('ventas.venta.buscar', ["estado_fact_elec" => $estado_fact_elec,"pagos"=>$pagos,"ventas" => $ventas, "personas" => $personas,"persona" => $persona, 'suma_pagos' => $suma_pagos, 'tipo_pago' => $tipo_pago, "searchText" => $query]);
     }
   
 }

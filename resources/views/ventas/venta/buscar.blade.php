@@ -117,18 +117,32 @@
 												aria-hidden="true"></span></button></a>
 							
 								</td>
-								@if($cat->condicion=="0")
+                @if(Auth::user()->sucursal == 1)
+
 								<td>
-									<span class="pull-center-container">
-										<small class="label pull-center bg-red">Anulado</small>
-									</span>
-								</td>
-								@elseif($cat->condicion=="1")
-								<td>
+									@foreach ($estado_fact_elec as $estado)
+									@if($cat->numero==$estado->numero)
+									@if($estado->estado=='AUTORIZADO')
 									<span class="pull-right-container">
-										<small class="label pull-center bg-blue">Facturado</small>
+										<small class="label pull-center bg-green"><a target="_blank" style="color:#fff"; href="http://162.243.161.165:9090/rest/v1/pdf/codigo/FV/numero/{{$cat->numero}}">{{$estado->estado}}</a></small>
 									</span>
+									@elseif($estado->estado=="RECIBIDA")
+									<span class="pull-right-container">
+										<small class="label pull-center bg-yellow">{{$estado->estado}}</small>
+									</span>
+									@elseif($estado->estado=="DEVUELTA")
+									<span class="pull-right-container">
+										<small class="label pull-center bg-red">{{$estado->estado}}</small>
+									</span>
+
+									@endif
+									@endif
+									@endforeach
+
 								</td>
+
+								@else
+								<td></td>
 								@endif
 								
 								<td>
