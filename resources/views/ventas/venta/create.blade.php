@@ -9,6 +9,15 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
+      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6" >
+          <div class="form-group">
+              {!! Form::label('codigo', 'Articulo') !!}
+              <select id="articulos" name="articulos" class="form-control" >
+      
+              </select>
+      
+            </div>
+      </div>
     <div class="panel ">
       <div class="panel-body">
         <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12">
@@ -261,7 +270,9 @@
 
 @section('css')
 
-<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-select.min.css')}}" />
+<link href="{{asset('css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+
 @stop
 
 @section('js')
@@ -272,13 +283,22 @@
 </script>
 <script src="{{ asset('/js/seldinnumcomprobante.js') }}" type="text/javascript">
 </script>
+<script src="{{ asset('/js/ajax-articulos.js') }}" type="text/javascript">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+
+
 
 <script>
+
   $(document).ready(function(){                                                                                               
        marcarImpuesto();
       $('#bt_add').click(function(){
         agregar();
       });
+
+ 
     });
   
   function vueltos(consulta){

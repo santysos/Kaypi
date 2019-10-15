@@ -36,6 +36,14 @@ class VentaController extends Controller
       return response()->json($precios);
     }
   }
+  public function getArticulos(Request $request)
+  {
+    if ($request->ajax()) {
+      return Kaypi\Articulo::where('nombre', 'LIKE', '%' . request($request) . '%')->paginate(10);
+    }
+  }
+
+
   public function getPagos(Request $request, $id)
   {
     if ($request->ajax()) {

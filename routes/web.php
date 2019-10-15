@@ -55,6 +55,11 @@ Route::get('compras/retenciones/impret/{id}', 'RetencionController@getImpuestos'
 Route::resource('pagos/tipopago', 'TipoPagoController');
 Route::resource('pagos/pago', 'PagosController');
 
+
+//Route::get('art/venta/articulo', 'VentaController@getArticulos');
+Route::get('art/venta/articulo',function(){
+    return Kaypi\Articulo::where('nombre', 'LIKE', '%' . request('q') . '%')->paginate(10);
+});
 Route::get('ventas/venta/dsp/{id}', 'VentaController@getPrecios');
 Route::get('ventas/venta/pagos/{id}', 'VentaController@getPagos');
 Route::get('ventas/venta/numComp/{id}', 'VentaController@getNumComprobante');
