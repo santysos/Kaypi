@@ -42,7 +42,11 @@ Route::get('ventas/ordenes/borrar/{id}', 'OrdenesController@borrarorden');
 Route::resource('ventas/ordenes','OrdenesController');
 Route::resource('ventas/cliente','ClienteController');
 Route::resource('ventas/venta','VentaController');
+
 Route::resource('buscar','BuscarController');
+
+Route::resource('buscarorden','BuscarOrdenController');
+
 Route::resource('ventas/reportes', 'ReportesController');
 Route::resource('ventas/produccion', 'ProduccionController');
 
@@ -57,6 +61,8 @@ Route::resource('pagos/pago', 'PagosController');
 
 
 Route::resource('pruebas', 'PruebasController');
+
+
 route::get('/art/venta/articulo','PruebasController@getArticulos');
 
 /*Route::get('art/venta/articulo',function(){

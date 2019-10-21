@@ -26,9 +26,10 @@
                 {!!Form::open(array('url'=>'ventas/procesos','method'=>'POST','autocomplete'=>'off'))!!}
                 {!!Form::token()!!}
 
-                @foreach($procesos as $proceso)@endforeach
+              
                 <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group">
+                            @foreach($procesos1 as $proceso)
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <h2>
@@ -50,6 +51,7 @@
                                 Modificado por: {{$proceso->asignador}}
                             </a>
                         </div>
+                        @endforeach
                     </div>
                     <div class="form-group" id="selectores">
                         <select class="form-control" id="idtb_descripcion_procesos" name="idtb_descripcion_procesos"
@@ -115,7 +117,7 @@
                 <input id="asignador" name="asignador" type="hidden" value="{{Auth::user()->id}}">
                 </input>
                 <input id="tb_ordenes_idtb_ordenes" name="tb_ordenes_idtb_ordenes" type="hidden"
-                    value="{{$proceso->tb_ordenes_idtb_ordenes}}">
+                    value="{{$idorden}}">
                 </input>
                 <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
                     <table class="table table-striped table-bordered table-condensed table-hover" id="tablaprocesos">
@@ -810,42 +812,36 @@
 </script>
 <script>
     function titulo(){      
-    document.title = 'Proceso Orden # '+{{$proceso->tb_ordenes_idtb_ordenes}}+' | Procesos'; }
+    document.title = 'Proceso Orden # '+{{$idorden}}+' | Procesos'; }
 titulo();
 </script>
 <script>
     moment.locale('es');
+    @foreach($procesos1 as $proceso)
     var formatofecha = '{{$proceso->created_at}}'; 
-
+    @endforeach
     $("#fecha").html("El "+ moment(formatofecha).format('LLLL'));
      
-
 $("#numfactura").hide();
-
+@foreach($procesos1 as $proceso)
 var compruebafactura = '{{$proceso->descripcion_procesos}}';
-
+@endforeach
 if(compruebafactura=="Facturado")
 {
     $("#selectores").hide();
         $("#selectores1").hide();
             $("#selectores2").hide();
 }
-
 else{
     $("#selectores").show();
         $("#selectores1").show();
             $("#selectores2").show();
 }
-
 console.log(compruebafactura);
     
-
 function MostrarFact(){
-
     datosprocesos =document.getElementById('idtb_descripcion_procesos').value;
-
     procesoselecionado = $("#idtb_descripcion_procesos option:selected").text();
-
     if(procesoselecionado.trim()=="Facturado"){
         $("#numfactura").show();
     }
@@ -853,7 +849,6 @@ function MostrarFact(){
     {
         $("#numfactura").hide();
     }
-
      console.log(procesoselecionado);
 }
 </script>

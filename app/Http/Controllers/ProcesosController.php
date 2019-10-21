@@ -258,9 +258,14 @@ class ProcesosController extends Controller
             ->where('pro.tb_ordenes_idtb_ordenes', '=', $id)
             ->where('ord.condicion', '=', '1')
             ->where('pro.condicion', '=', '1')
-            ->get();
+            ->get(1);
 
+            $idorden = 0;
 
+            if ($procesos1 != null) {
+                foreach ($procesos1 as $pro)
+                    $idorden = $pro->tb_ordenes_idtb_ordenes;
+            }
 
         $listadoprocesos = DescripcionProcesos::where('condicion', '=', '1')->get();
 
@@ -343,7 +348,7 @@ class ProcesosController extends Controller
         
       //  dd($produccion);
 
-        return view("ventas.procesos.show", ["detalleorden" => $detalleorden, "produccion" => $produccion, "sumaproduccion" => $sumaproduccion, "procesos1" => $procesos1, "usuariosdep" => $usuariosdep, "iddep" => $iddep, "procesos" => $procesos, "listadoprocesos" => $listadoprocesos, "usuarios" => $usuarios]);
+        return view("ventas.procesos.show", ["idorden"=>$idorden,"detalleorden" => $detalleorden, "produccion" => $produccion, "sumaproduccion" => $sumaproduccion, "procesos1" => $procesos1, "usuariosdep" => $usuariosdep, "iddep" => $iddep, "procesos" => $procesos, "listadoprocesos" => $listadoprocesos, "usuarios" => $usuarios]);
     }
 
 

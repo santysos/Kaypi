@@ -244,6 +244,32 @@ return [
     
         'PROCESOS',
         [
+            // This option is only here to tell the system that this is a search menu item
+            // as we coud not rely on the 'text' value.
+            'search' => true,
+        
+            // The "text" option is used now as value for the placeholder
+            'text' => 'Buscar Orden...',
+        
+            // Another option (not implemented) would be to create a "placeholder" option but I thought it would be more
+            // consistant from a configurat point of view to keep "text" (less consistant from a HTML point of view though)
+            // 'placeholder' => 'Search...',
+            
+            // OPTIONAL
+        
+            // Same as the HREF filter:
+            'url' => '/buscarorden',
+            // Or
+          //'route' => '/buscarorden',
+        
+            // Must be post or get otherwise it set to the default "get"
+            // https://www.w3.org/TR/html401/interact/forms.html#h-17.3
+            'method' => 'get', 
+        
+            // Set the name of the search input field. Default= "q"
+            'input_name' => 'searchText',
+        ],
+        [
             'text'  => 'Ordenes',
             'url'   => '#',
             'icon'  => 'clone',

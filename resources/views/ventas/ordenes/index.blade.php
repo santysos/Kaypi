@@ -62,6 +62,7 @@
                                 </th>
                                 <th>
                                     Opciones
+                                    
                                 </th>
                             </thead>
                             @foreach ($ordenes as $cat)

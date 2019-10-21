@@ -29,7 +29,7 @@
                     'form-control','id'=>'cantidad','placeholder'=>'0','required'=>'required']) !!}
                     @endif
                     {!!Form::hidden('tb_detalle_orden_idtb_detalle_orden',$dt->idtb_detalle_orden,['id'=>'tb_detalle_orden_idtb_detalle_orden','class'=>'form-control','placeholder'=>'Cantidad'])!!}
-                    {!!Form::hidden('tb_ordenes_idtb_ordenes',$proceso->tb_ordenes_idtb_ordenes,['id'=>'tb_ordenes_idtb_ordenes','class'=>'form-control'])!!}
+                    {!!Form::hidden('tb_ordenes_idtb_ordenes',$idorden,['id'=>'tb_ordenes_idtb_ordenes','class'=>'form-control'])!!}
                     {!!Form::hidden('tb_departamentos_idtb_departamentos',5,['class'=>'form-control'])!!}
                 </div>
 

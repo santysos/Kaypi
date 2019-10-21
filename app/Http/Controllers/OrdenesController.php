@@ -43,6 +43,7 @@ class OrdenesController extends Controller
             return view('ventas.ordenes.index', ["ordenes" => $ordenes, "searchText" => $query]);
         }
     }
+    
 
     public function getDescripcionServicios(Request $request, $id){
         if ($request->ajax()) {
@@ -84,7 +85,7 @@ class OrdenesController extends Controller
 
         $ordenes = Ordenes::pluck('idtb_ordenes')->last();
 
-        return view('ventas.ordenes.create', compact('servicios', 'agentes', 'ordenes','articulos'));
+        return view('ventas.ordenes.create', compact('servicios', 'ordenes','articulos'));
     }
 
     public function store(OrdenesFormRequest $request)
