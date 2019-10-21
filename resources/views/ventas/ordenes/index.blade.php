@@ -46,6 +46,9 @@
                                     # Orden
                                 </th>
                                 <th>
+                                    Proceso
+                                </th>
+                                <th>
                                     Cliente
                                 </th>
                                 <th>
@@ -62,16 +65,41 @@
                                 </th>
                                 <th>
                                     Opciones
-                                    
+
                                 </th>
                             </thead>
                             @foreach ($ordenes as $cat)
                             <tr>
-                                <td>
-                                    <a href="{{URL::action('ProcesosController@show',$cat->idtb_ordenes)}}"
+                                <td> <a href="{{URL::action('ProcesosController@show',$cat->idtb_ordenes)}}"
                                         target="_blank">
                                         {{$cat->idtb_ordenes}}
-                                    </a>
+                                    </a></td>
+                                <td>
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-aqua">{{$cat->descripcion_procesos}}</small>
+                                    </span>
+                                    <br>
+                                    @if($cat->departamento=="Producción")
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-yellow">{{$cat->departamento}}</small>
+                                    </span>
+                                    @elseif($cat->departamento=="Confección")
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-green">{{$cat->departamento}}</small>
+                                    </span>  
+                                    @elseif($cat->departamento=="Etiquetado")
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-red">{{$cat->departamento}}</small>
+                                    </span> 
+                                    @elseif($cat->departamento=="Empaquetado")
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-danger">{{$cat->departamento}}</small>
+                                    </span>  
+                                    @elseif($cat->departamento)
+                                    <span class="pull-right-container">
+                                        <small class="label pull-center bg-blue">{{$cat->departamento}}</small>
+                                    </span>  
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $cat->nombre_comercial}}

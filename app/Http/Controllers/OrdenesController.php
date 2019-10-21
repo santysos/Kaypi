@@ -32,13 +32,22 @@ class OrdenesController extends Controller
                 ->join('users as emp', 'emp.id', '=', 'ord.users_id_asignador')
                 ->join('users as age', 'age.id', '=', 'ord.users_id_asignado')
                 ->join('tb_cliente as cli', 'cli.idtb_cliente', '=', 'ord.tb_cliente_idtb_cliente')
-                ->select('ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name as asignador', 'age.name as agente', 'cli.nombre_comercial')
+                ->join('tb_procesos as pro','pro.tb_ordenes_idtb_ordenes','=','ord.idtb_ordenes')
+                ->join('tb_descripcion_procesos as despro','pro.tb_descripcion_procesos_idtb_descripcion_procesos','=','despro.idtb_descripcion_procesos')
+                ->join('tb_departamentos as dep','dep.idtb_departamentos','=','despro.tb_departamentos_idtb_departamentos')
+                ->select('dep.departamento','despro.descripcion_procesos','ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name as asignador', 'age.name as agente', 'cli.nombre_comercial')
                 ->where('cli.nombre_comercial', 'LIKE', '%' . $query . '%')
                 ->where('ord.condicion', '=', '1')
+                ->where('pro.condicion', '=', '1')
+                ->where('despro.condicion', '=', '1')
+                ->where('dep.condicion', '=', '1')
                 ->orwhere('ord.idtb_ordenes', '=', $query)
                 ->orderBy('ord.idtb_ordenes', 'desc')
-                ->groupBy('ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name', 'cli.nombre_comercial', 'age.name', 'users_id_asignador', 'users_id_asignado')
+                ->groupBy('ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name', 'cli.nombre_comercial', 'age.name', 'ord.users_id_asignador', 'ord.users_id_asignado')
                 ->paginate(20);
+
+               // dd($ordenes);
+   
 
             return view('ventas.ordenes.index', ["ordenes" => $ordenes, "searchText" => $query]);
         }
