@@ -158,7 +158,17 @@ class ProcesosController extends Controller
 
             // dd($enentrega);
 
-            return view('ventas.procesos.index', ["departamentos" => $departamentos, "enentrega" => $enentrega, "procesos" => $procesos]);
+            $ordenes = DB::table('tb_ordenes as ord')
+            ->join('users as emp', 'emp.id', '=', 'ord.users_id_asignador')
+            ->join('users as age', 'age.id', '=', 'ord.users_id_asignado')
+            ->join('tb_cliente as cli', 'cli.idtb_cliente', '=', 'ord.tb_cliente_idtb_cliente')
+            ->select('ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name as asignador', 'age.name as agente', 'cli.nombre_comercial')
+            ->where('ord.condicion', '=', '1')
+            ->orderBy('ord.idtb_ordenes', 'desc')
+            ->groupBy('ord.idtb_ordenes', 'ord.fecha_inicio', 'ord.fecha_entrega', 'ord.total_venta', 'ord.impuesto', 'ord.abono', 'ord.observaciones', 'ord.condicion', 'emp.name', 'cli.nombre_comercial', 'age.name', 'users_id_asignador', 'users_id_asignado')
+            ->paginate(10);
+
+            return view('ventas.procesos.index', ["ordenes"=>$ordenes, "departamentos" => $departamentos, "enentrega" => $enentrega, "procesos" => $procesos]);
         }
     }
 

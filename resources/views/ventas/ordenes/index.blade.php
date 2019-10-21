@@ -100,7 +100,7 @@
                                 @if((Auth::user()->id)==1||(Auth::user()->id)==3)
                                 <a href="{{URL::action('OrdenesController@borrarorden',$cat->idtb_ordenes)}}">
                                     <button class="btn btn-danger btn-xs" onclick="return confirm('Seguro que desea Eliminar?')" type="submit">
-                                        <span aria-hidden="true" class="glyphicon glyphicon-list-alt">
+                                        <span aria-hidden="true" class="glyphicon glyphicon-trash">
                                         </span>
                                     </button>
                                 </a>

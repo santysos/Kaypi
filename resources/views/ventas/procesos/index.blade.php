@@ -3,7 +3,7 @@
 @section('title', 'Procesos')
 
 @section('content_header')
-    <h1>Listado de Procesos</h1>
+<h1>Listado de Procesos</h1>
 @stop
 
 @section('content')
@@ -21,93 +21,177 @@
                 <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
                     <div class="form-group">
                         <div class="input-group col-lg-12">
-                            <input class="form-control" id="norden" name="norden" placeholder="Buscar por numero de Orden" type="number" value="">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" id="boton" type="submit">
-                                        Buscar
-                                    </button>
-                                </span>
+                            <input class="form-control" id="norden" name="norden"
+                                placeholder="Número de Orden" type="number" value="">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" id="boton" type="submit">
+                                    Buscar
+                                </button>
+                            </span>
                             </input>
                         </div>
                     </div>
                 </div>
-              
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue">
+                            <i class="fa fa-gears">
+                            </i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Ordenes en proceso
+                            </span>
+                            <span class="info-box-number">
+                                {{$procesos->count}}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua">
+                            <i class="fa fa-shopping-cart">
+                            </i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Ventas
+                            </span>
+                            <span class="info-box-number">
+                                {{$procesos->ingresoventas+$procesos->sri+$procesos->quito}}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green">
+                            <i class="fa fa-optin-monster">
+                            </i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Diseño
+                            </span>
+                            <span class="info-box-number">
+                                {{$procesos->disenador+$procesos->disenado+$procesos->ingresodiseno}}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow">
+                            <i class="fa fa-print">
+                            </i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Produccion
+                            </span>
+                            <span class="info-box-number">
+                                {{$procesos->ingresoproduccion+$procesos->impresion+$procesos->acabados }}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-condensed table-hover" id="example">
+                            <thead>
+                                <th>
+                                    # Orden
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
+                                <th>
+                                    Fecha Entrega
+                                </th>
+                                <th>
+                                    Agente
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    Opciones
+                                </th>
+                            </thead>
+                            @foreach ($ordenes as $cat)
+                            <tr>
+                                <td>
+                                    <a href="{{URL::action('ProcesosController@show',$cat->idtb_ordenes)}}"
+                                        target="_blank">
+                                        {{$cat->idtb_ordenes}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ $cat->nombre_comercial}}
+                                </td>
+                                <td>
+                                    {{ $cat->fecha_inicio}}
+                                </td>
+                                <td>
+                                    {{ $cat->fecha_entrega}}
+                                </td>
+                                <td>
+                                    {{ $cat->asignador}}
+                                </td>
+                                <td>
+                                    {{ $cat->total_venta}}
+                                </td>
+                                <td>
+                                    <a href="{{URL::action('OrdenesController@show',$cat->idtb_ordenes)}}">
+                                        <button class="btn btn-primary btn-xs" type="button">
+                                            <span aria-hidden="true" class="glyphicon glyphicon-list-alt">
+                                            </span>
+                                        </button>
+                                    </a>
+                                    <a href="{{URL::action('ImprimirController@reportec',$cat->idtb_ordenes)}}"
+                                        target="_blank">
+                                        <button class="btn btn-success btn-xs" type="button">
+                                            <span aria-hidden="true" class="glyphicon glyphicon-print">
+                                            </span>
+                                        </button>
+                                    </a>
+                                    @if((Auth::user()->id)==1||(Auth::user()->id)==3)
+                                    <a href="{{URL::action('OrdenesController@borrarorden',$cat->idtb_ordenes)}}">
+                                        <button class="btn btn-danger btn-xs"
+                                            onclick="return confirm('Seguro que desea Eliminar?')" type="submit">
+                                            <span aria-hidden="true" class="glyphicon glyphicon-trash">
+                                            </span>
+                                        </button>
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-            <span class="info-box-icon bg-blue">
-                <i class="fa fa-gears">
-                </i>
-            </span>
-            <div class="info-box-content">
-                <span class="info-box-text">
-                    Ordenes en proceso
-                </span>
-                <span class="info-box-number">
-                    {{$procesos->count}}
-                </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
+
+    <div class="row">
+
     </div>
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-            <span class="info-box-icon bg-aqua">
-                <i class="fa fa-shopping-cart">
-                </i>
-            </span>
-            <div class="info-box-content">
-                <span class="info-box-text">
-                    Ventas
-                </span>
-                <span class="info-box-number">
-                    {{$procesos->ingresoventas+$procesos->sri+$procesos->quito}}
-                </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-    </div>
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-            <span class="info-box-icon bg-green">
-                <i class="fa fa-optin-monster">
-                </i>
-            </span>
-            <div class="info-box-content">
-                <span class="info-box-text">
-                    Diseño
-                </span>
-                <span class="info-box-number">
-                    {{$procesos->disenador+$procesos->disenado+$procesos->ingresodiseno}}
-                </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-    </div>
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-            <span class="info-box-icon bg-yellow">
-                <i class="fa fa-print">
-                </i>
-            </span>
-            <div class="info-box-content">
-                <span class="info-box-text">
-                    Produccion
-                </span>
-                <span class="info-box-number">
-                    {{$procesos->ingresoproduccion+$procesos->impresion+$procesos->acabados }}
-                </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
+    <div class="row">
+
     </div>
 </div>
 <div class="row">
@@ -121,7 +205,8 @@
                     Ingreso En Ventas
                 </h3>
                 <div class="box-tools pull-right">
-                    <span class="badge badge bg-aqua" data-original-title="{{$procesos->ingresoventas}} Ordenes" data-toggle="tooltip" title="">
+                    <span class="badge badge bg-aqua" data-original-title="{{$procesos->ingresoventas}} Ordenes"
+                        data-toggle="tooltip" title="">
                         {{$procesos->ingresoventas}}
                     </span>
                     <button class="btn btn-box-tool" data-widget="collapse" type="button">
@@ -152,10 +237,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 1)
+                            @if($pro->idtb_descripcion_procesos == 1)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -172,7 +258,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -188,7 +274,8 @@
                     Esperando Autorizacion SRI
                 </h3>
                 <div class="box-tools pull-right">
-                    <span class="badge badge bg-aqua" data-original-title=" {{$procesos->sri}} Ordenes" data-toggle="tooltip" title="">
+                    <span class="badge badge bg-aqua" data-original-title=" {{$procesos->sri}} Ordenes"
+                        data-toggle="tooltip" title="">
                         {{$procesos->sri}}
                     </span>
                     <button class="btn btn-box-tool" data-widget="collapse" type="button">
@@ -219,10 +306,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 3)
+                            @if($pro->idtb_descripcion_procesos == 3)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -239,7 +327,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -287,10 +375,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 7)
+                            @if($pro->idtb_descripcion_procesos == 7)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -307,7 +396,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -360,10 +449,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 2)
+                            @if($pro->idtb_descripcion_procesos == 2)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -380,7 +470,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -428,10 +518,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 5)
+                            @if($pro->idtb_descripcion_procesos == 5)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -448,7 +539,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -496,10 +587,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 6)
+                            @if($pro->idtb_descripcion_procesos == 6)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -516,7 +608,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -569,10 +661,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 8)
+                            @if($pro->idtb_descripcion_procesos == 8)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -589,7 +682,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -637,10 +730,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 14)
+                            @if($pro->idtb_descripcion_procesos == 14)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -657,7 +751,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -673,7 +767,8 @@
                     Ordenes en Acabados Finales
                 </h3>
                 <div class="box-tools pull-right">
-                    <span class="badge badge bg-aqua" data-original-title="{{$procesos->acabados}} Ordenes" data-toggle="tooltip" title="">
+                    <span class="badge badge bg-aqua" data-original-title="{{$procesos->acabados}} Ordenes"
+                        data-toggle="tooltip" title="">
                         {{$procesos->acabados}}
                     </span>
                     <button class="btn btn-box-tool" data-widget="collapse" type="button">
@@ -704,10 +799,11 @@
                         </thead>
                         <tbody>
                             @foreach($procesos as $pro)
-                    @if($pro->idtb_descripcion_procesos == 15)
+                            @if($pro->idtb_descripcion_procesos == 15)
                             <tr>
                                 <td>
-                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}" target="_blank">
+                                    <a href="{{URL::action('ProcesosController@show',$pro->tb_ordenes_idtb_ordenes)}}"
+                                        target="_blank">
                                         {{$pro->tb_ordenes_idtb_ordenes}}
                                     </a>
                                 </td>
@@ -724,7 +820,7 @@
                                 </td>
                             </tr>
                             @endif
-                    @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -739,7 +835,7 @@
 @stop
 
 @section('css')
-    
+
 @stop
 
 @section('js')
@@ -756,9 +852,5 @@
     $('#boton').click(function(){
     location.href='procesos/'+consulta;
             });
-    </script>
+</script>
 @stop
-
-
-
-

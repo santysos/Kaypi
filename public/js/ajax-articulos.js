@@ -3,7 +3,7 @@ $('#articulos').select2({
     ajax:{
         url : '/art/venta/articulo',
         dataType : 'json',
-        delay : 200,
+        delay : 250,
         data: function(params){
             return{
                 q :params.term,
@@ -15,7 +15,7 @@ $('#articulos').select2({
 
             return{
                 results : data.data,
-                paginations : {
+                pagination : {
                     more : (params.page * 10)< data.total
                 }
             };

@@ -13,7 +13,8 @@
           <div class="form-group">
               {!! Form::label('codigo', 'Articulo') !!}
               <select id="articulos" name="articulos" class="form-control" >
-      
+                <option value='0'>-- Select user --</option>
+
               </select>
       
             </div>
@@ -286,9 +287,6 @@
 <script src="{{ asset('/js/ajax-articulos.js') }}" type="text/javascript">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-
-
-
 
 <script>
 
