@@ -120,7 +120,10 @@ class VentaController extends Controller
         // dd($ventas);
         $personas = DB::table('tb_cliente')
           ->select(DB::raw('CONCAT(cedula_ruc," - ",nombre_comercial)AS cedcliente'), 'idtb_cliente')->get();
-      } //para los usuarios que no son ADMINISTRADORES
+      }
+      ////////////////////////////////////////////////
+      //Para los usuarios que no son ADMINISTRADORES//
+      ///////////////////////////////////////////////
       else {
         $ventas = DB::table('tb_venta as v')
           ->join('tb_cliente as p', 'v.tb_cliente_idtb_cliente', '=', 'p.idtb_cliente')
@@ -164,7 +167,7 @@ class VentaController extends Controller
           ->select(DB::raw('CONCAT(cedula_ruc," - ",nombre_comercial)AS cedcliente'), 'idtb_cliente')->get();
       }
 
-      return view('ventas.venta.index', [ "ventas" => $ventas, "personas" => $personas, 'suma_pagos' => $suma_pagos, 'tipo_pago' => $tipo_pago,"estado_fact_elec" => $estado_fact_elec, "searchText" => $query]);
+      return view('ventas.venta.index', ["ventas" => $ventas, "personas" => $personas, 'suma_pagos' => $suma_pagos, 'tipo_pago' => $tipo_pago, "estado_fact_elec" => $estado_fact_elec, "searchText" => $query]);
     }
   }
   public function create()
@@ -174,20 +177,26 @@ class VentaController extends Controller
         ->select(DB::raw('CONCAT(razon_social," - ",cedula_ruc)AS cedcliente'), 'idtb_cliente')
         ->get(); //para que el preveedor tambien sea cliente eliminar el where
       $articulos = DB::table('tb_articulo as art')
-        ->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre)AS articulo'), 'art.idtb_articulo', 'art.stock', 'art.pvp', 'art.iva')
+        ->join('tb_categoria as cat', 'cat.idtb_categoria', '=', 'art.tb_categoria_idtb_categoria')
+        ->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre,"     // CAT: ",cat.nombre)AS articulo'), 'art.idtb_articulo', 'art.stock', 'art.pvp', 'art.iva')
         /*->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre)AS articulo'),'art.idarticulo','art.stock', DB::raw('avg(di.precio_venta) as precio_promedio'))*/
         //esta calculando el precio promedio de todos los precios de venta ingresados, si si desea se puede calcular el precio de venta con el ultimo precio de compra. cambiando la consulta DB
         ->where('art.condicion', '=', '1')
         //->where('art.stock','>','0')
         ->groupBy('articulo', 'art.idtb_articulo', 'art.stock', 'art.pvp', 'art.iva')
         ->get();
-    } else {
+    }
+    ////////////////////////////////////////////////
+    //Para los usuarios que no son ADMINISTRADORES//
+    ///////////////////////////////////////////////
+    else {
       $personas = DB::table('tb_cliente')
         ->select(DB::raw('CONCAT(razon_social," - ",cedula_ruc)AS cedcliente'), 'idtb_cliente')
         ->get(); //para que el preveedor tambien sea cliente eliminar el where
       $articulos = DB::table('tb_articulo as art')
-        ->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre)AS articulo'), 'art.idtb_articulo', 'art.stock', 'art.pvp', 'art.iva')
-        /*->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre)AS articulo'),'art.idarticulo','art.stock', DB::raw('avg(di.precio_venta) as precio_promedio'))*/
+      ->join('tb_categoria as cat', 'cat.idtb_categoria', '=', 'art.tb_categoria_idtb_categoria')
+      ->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre,"     // CAT: ",cat.nombre)AS articulo'), 'art.idtb_articulo', 'art.stock', 'art.pvp', 'art.iva')
+      /*->select(DB::raw('CONCAT("COD: ",art.codigo," - ",art.nombre)AS articulo'),'art.idarticulo','art.stock', DB::raw('avg(di.precio_venta) as precio_promedio'))*/
         //esta calculando el precio promedio de todos los precios de venta ingresados, si si desea se puede calcular el precio de venta con el ultimo precio de compra. cambiando la consulta DB
         ->where('art.condicion', '=', '1')
         ->where('art.sucursal', '=', Auth::user()->sucursal)
