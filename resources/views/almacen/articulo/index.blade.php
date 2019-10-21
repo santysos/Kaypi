@@ -3,7 +3,7 @@
 @section('title', 'Inventario')
 
 @section('content_header')
-    <h1>Inventario</h1>
+    <h1>Inventario {{$tit_sucursal->nombre}}</h1>
 @stop
 
 @section('content')
@@ -38,7 +38,6 @@
 		<div class="table-responsive">
 			<table id="example" class="table table-striped table-bordered table-condensed table-hover">
 			<thead>
-				<th>ID</th>
 				<th>Código</th>
 				<th>Nombre Producto</th>
 				<th>Fecha Creación</th>
@@ -54,7 +53,6 @@
 			@foreach ($articulos as $cat)
 			@if($cat->condicion == '1')
 			<tr>
-				<td>{{ $cat->idtb_articulo}}</td>
 				<td>{{ $cat->codigo}}</td>
 				<td>{{ $cat->nombre}}</td>
 				<td>{{ $cat->created_at}}</td>

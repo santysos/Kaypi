@@ -51,7 +51,13 @@ class ArticuloController extends Controller
                ->paginate(20);
          }
 
-         return view('almacen.articulo.index', ["articulos" => $articulos, "searchText" => $query]);
+         $tit_sucursal = db::table('tb_sucursal')
+             ->select('nombre')
+             ->where('idtb_sucursal','=',2)
+             ->first();
+         $tit_sucursal->nombre = "Todas las Sucursales";    
+
+         return view('almacen.articulo.index', ["tit_sucursal"=>$tit_sucursal,"articulos" => $articulos, "searchText" => $query]);
       }
    }
    public function create()

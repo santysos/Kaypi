@@ -36,9 +36,14 @@ class Articulo2Controller extends Controller
              ->orderBy('idtb_articulo', 'desc')
              ->groupBy('a.idtb_articulo', 'a.iva', 'a.nombre', 'a.codigo', 'a.stock', 'c.nombre', 'a.descripcion', 'a.imagen', 'a.condicion', 'a.created_at', 'a.updated_at', 'a.pvp')
              ->paginate(20);
+
+             $tit_sucursal = db::table('tb_sucursal')
+             ->select('nombre')
+             ->where('idtb_sucursal','=',2)
+             ->first();
           }
  
-          return view('almacen.articulo.index', ["articulos" => $articulos, "searchText" => $query]);
+          return view('almacen.articulo.index', ["tit_sucursal"=>$tit_sucursal,"articulos" => $articulos, "searchText" => $query]);
        }
     }
     public function reportes()
