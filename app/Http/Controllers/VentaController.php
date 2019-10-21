@@ -246,7 +246,13 @@ class VentaController extends Controller
       $venta->sub_total_0 = $request->get('sub_total_0');
       $venta->sub_total_12 = $request->get('sub_total_12');
       $venta->forma_de_pago = $request->get('forma_de_pago');
+
+      //Agrega la sucursal seleccionada por el usuario administrador
+      if (Auth::user()->tb_tipo_usuario_idtb_tipo_usuario == 1) {
+      $venta->sucursal = $request->get('selectsucursal');
+      }else
       $venta->sucursal = $request->get('sucursal');
+
 
       $mytime = Carbon::now('America/Guayaquil');
       $venta->created_at  = $mytime->toDateTimeString();
